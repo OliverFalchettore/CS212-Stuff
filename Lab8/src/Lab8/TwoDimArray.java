@@ -9,7 +9,7 @@ public class TwoDimArray {
     // Main method, entry point of the program
     public static void main(String[] args) {
         // Calls fillArray method to read a file and fill a 2D array
-        int[][] myArray = fillArray(args[0]);
+        int[][] myArray = fillArray("twodimension.txt");
         
         // Prints the contents of the array
         printArray(myArray);
@@ -61,26 +61,29 @@ public class TwoDimArray {
     // Method to read the file and fill a 2D array with data
     public static int[][] fillArray(String myFile) {
         // Create a new TextFileInput object to read from the file
+    	System.out.println("Trying to open file: " + myFile);
         TextFileInput in = new TextFileInput(myFile);
         
         line = in.readLine();
         
-        StringTokenizer myTokens = new StringTokenizer(line, " ");
-        
+        StringTokenizer firstlineTokens = new StringTokenizer(line, ",");
+
         // Read the first two lines for the number of rows and columns
-        int row = Integer.parseInt(in.readLine()); // Reads the number of rows
-        int col = Integer.parseInt(in.readLine()); // Reads the number of columns
+        int row = Integer.parseInt(firstlineTokens.nextToken()); // Reads the number of rows
+        int col = Integer.parseInt(firstlineTokens.nextToken()); // Reads the number of columns
+        
         
         // Create a 2D array with the specified number of rows and columns
-        int[] numbers = new int[myTokens.countTokens()];
         int[][] arr = new int[row][col];
         
         
         // Loop through the array and fill it with values from the file
         for (int i = 0; i < row; i++) {
+        	line = in.readLine();
+        	StringTokenizer rowTokens = new StringTokenizer(line, ",");
             for (int j = 0; j < col; j++) {
                 // Read the next line from the file and assign it to the array
-                arr[i][j] = Integer.parseInt(in.readLine());
+                arr[i][j] = Integer.parseInt(rowTokens.nextToken());
             }
         }
         // Return the filled array
